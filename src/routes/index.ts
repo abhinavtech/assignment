@@ -3,12 +3,24 @@ import {IPricingRuleDao} from "../daos/PricingRule/PricingRuleDao";
 import PricingRuleDao from "../daos/PricingRule/PricingRuleDao.mock";
 import {IItemDao} from "../daos/Item/ItemDao";
 import ItemDao from "../daos/Item/ItemDao.mock";
+import {ICustomerDao} from "../daos/Customer/CustomerDao";
+import CustomerDao from "../daos/Customer/CustomerDao.mock";
 
 const router = Router();
 const pricingDao: IPricingRuleDao = new PricingRuleDao();
 const itemsDao: IItemDao = new ItemDao();
+const customersDao: ICustomerDao = new CustomerDao();
 
 router.post('/customers', (req: Request, res: Response) => {
+   res.send('Hello Pizza!');
+});
+
+router.get('/customers', async (req: Request, res: Response) => {
+   const response = await customersDao.deleteAllCustomers();
+   res.send({response});
+});
+
+router.delete('/customers/all', (req: Request, res: Response) => {
    res.send('Hello Pizza!');
 });
 
