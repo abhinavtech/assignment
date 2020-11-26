@@ -1,1 +1,1 @@
-{"pricingRules":[{"id":1,"code":"FIFTY","type":"flat","description":"Flat $50 off on small pizzas","discount":50,"itemType":"small"}],"items":[{"id":1,"name":"Small Veg Pizza","description":"Delicious veg pizza","retailPrice":100,"type":"small"}]}
+{"pricingRules":[{"id":1,"code":"50OFF","type":"percent","itemType":"small","discount":50,"description":"50 % Off"},{"id":2,"code":"50OFFMED","type":"percent","itemType":"medium","discount":50,"description":"50 % Off"}],"items":[{"id":1,"name":"Small Veg Pizza","description":"Delicious veg pizza","retailPrice":100,"type":"small"}]}

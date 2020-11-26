@@ -10,4 +10,20 @@ export default class ItemDao extends MockDaoMock implements IItemDao {
         await super.saveDb(db);
         return Promise.resolve("success");
     }
+
+    async getItemByName(name: string): Promise<Item | null> {
+        const db = await super.openDb();
+        for (const item of db.items) {
+            if (item.name === name) {
+                return Promise.resolve(new Item(
+                    item.id,
+                    item.name,
+                    item.description,
+                    item.retailPrice,
+                    item.type
+                ));
+            }
+        }
+        return Promise.resolve(null);
+    }
 }
