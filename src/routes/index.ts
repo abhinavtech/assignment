@@ -11,17 +11,40 @@ const pricingDao: IPricingRuleDao = new PricingRuleDao();
 const itemsDao: IItemDao = new ItemDao();
 const customersDao: ICustomerDao = new CustomerDao();
 
-router.post('/customers', (req: Request, res: Response) => {
-   res.send('Hello Pizza!');
-});
-
-router.get('/customers', async (req: Request, res: Response) => {
-   const response = await customersDao.deleteAllCustomers();
+router.post('/customers', async (req: Request, res: Response) => {
+   const customer = req.body;
+   const response = await customersDao.saveCustomer(customer);
    res.send({response});
 });
 
-router.delete('/customers/all', (req: Request, res: Response) => {
-   res.send('Hello Pizza!');
+router.get('/customers/:name', async (req: Request, res: Response) => {
+   const name = req.params.name;
+   const response = await customersDao.getCustomerByName(name);
+   res.send({response});
+});
+
+router.post('/customers/addPricing', async (req: Request, res: Response) => {
+   const name = req.body.name;
+   const code = req.body.code;
+   console.log(req.body);
+   const response = await customersDao.addPricingToCustomer(name, code);
+   res.send({response});
+});
+
+router.post('/customers/resetPricing', async (req: Request, res: Response) => {
+   const name = req.body.name;
+   const response = await customersDao.resetPricingForCustomer(name);
+   res.send({response});
+});
+
+router.get('/customers', async (req: Request, res: Response) => {
+   const response = await customersDao.getAllCustomers();
+   res.send({response});
+});
+
+router.delete('/customers/all', async (req: Request, res: Response) => {
+   const response = await customersDao.deleteAllCustomers();
+   res.send({response});
 });
 
 router.post('/items', async (req: Request, res: Response) => {
