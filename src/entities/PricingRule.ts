@@ -33,9 +33,26 @@ class PricingRule implements IPricingRule {
 
     public applyRule(items: Item[]): number {
         let discountAmount = 0;
-        for(const item of items) {
-            if (this.type === PricingType.flat && item.type === this.itemType)
-                discountAmount += item.retailPrice - this.discount;
+        let itemCount = 0;
+        if (this.type === PricingType.quantity && this.totalItems && items.length >= this.totalItems) {
+            for (const item of items) {
+                if (item.type === this.itemType && itemCount < this.totalItems) {
+                    itemCount++;
+                    if (itemCount > this.totalItems - this.discount) {
+                        discountAmount += item.retailPrice;
+                    }
+                }
+            }
+            if(itemCount < this.totalItems) discountAmount = 0;
+        } else {
+            for(const item of items) {
+                if (item.type === this.itemType)  {
+                    if (this.type === PricingType.flat)
+                        discountAmount += this.discount;
+                    if (this.type === PricingType.percent)
+                        discountAmount += item.retailPrice * this.discount / 100;
+                }
+            }
         }
         return discountAmount;
     }

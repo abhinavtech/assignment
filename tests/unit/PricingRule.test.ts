@@ -12,4 +12,23 @@ describe('Tests Pricing Rules', () => {
         expect(discountAmount).toBe(100);
         done();
     });
+
+    it('Should give a 3 for 2 offer on medium pizzas', (done) => {
+        const pricingRule: PricingRule = new PricingRule(1,
+            '3FOR2',
+            PricingType.quantity,
+            1,
+            ItemType.medium,
+            '3 for 2',
+            3);
+        const items: Item[] = [] as Item[];
+        items.push(new Item(1, 'Medium Pizza', 'Medium Pizza', 100, ItemType.medium));
+        items.push(new Item(1, 'Medium Pizza', 'Medium Pizza', 100, ItemType.medium));
+        items.push(new Item(1, 'Medium Pizza', 'Medium Pizza', 100, ItemType.medium));
+        items.push(new Item(1, 'Medium Pizza', 'Medium Pizza', 100, ItemType.medium));
+        items.push(new Item(1, 'Large Pizza', 'Large Pizza', 500, ItemType.large));
+        const discountAmount = pricingRule.applyRule(items);
+        expect(discountAmount).toBe(100);
+        done();
+    });
 });
