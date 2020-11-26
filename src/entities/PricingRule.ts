@@ -1,4 +1,4 @@
-import Item, {ItemType} from "./Item";
+import Item, {IItem, ItemType} from "./Item";
 
 export interface IPricingRule {
     id: number;
@@ -8,7 +8,7 @@ export interface IPricingRule {
     discount: number;
     totalItems: number | undefined;
     itemType: ItemType;
-    applyRule(items: Item[]): number;
+    applyRule(items: IItem[]): number;
 }
 
 class PricingRule implements IPricingRule {
