@@ -29,7 +29,7 @@ export default class Checkout implements ICheckout{
         let totalAmount = 0;
         let discountAmount = 0;
         for (const item of this.items) {
-            totalAmount += item.retailPrice;
+            totalAmount += item.retailPrice * item.quantity;
         }
         for (const pricingRule of this.pricingRules) {
             discountAmount += pricingRule.applyRule(this.items);
@@ -37,6 +37,5 @@ export default class Checkout implements ICheckout{
         totalAmount -= discountAmount;
         return totalAmount;
     }
-
 }
 

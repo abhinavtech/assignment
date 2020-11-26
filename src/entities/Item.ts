@@ -5,6 +5,7 @@ export interface IItem {
     retailPrice: number;
     type: ItemType;
     quantity: number;
+    setQuantity(quantity: number): void;
 }
 
 class Item implements IItem {
@@ -24,9 +25,8 @@ class Item implements IItem {
         this.quantity = 0;
     }
 
-    public setQuantity(quantity: number): this {
+    public setQuantity(quantity: number): void {
         this.quantity = quantity;
-        return this;
     }
 }
 

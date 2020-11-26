@@ -90,26 +90,34 @@ router.post('/checkout', async (req: Request, res: Response) => {
    const pricingRules: IPricingRule[] = [] as IPricingRule[];
    const items: IItem[] = [] as IItem[];
    const customer = await customersDao.getCustomerByName(name);
+   if (customer === null)
+      res.send('Invalid customer');
+   const pricingMap: any = {};
+   for(const rule in customer?.pricingRules) {
+      pricingMap[rule] = true;
+   }
    if(codes && codes[0]) {
       for (const code of codes) {
          const pricingRule = await pricingDao.getPricingByCode(code);
          if (pricingRule === null) {
             res.send("Invalid Code");
          }
+         if (pricingMap[code] === undefined) {
+            res.send("Code not activated for customer")
+         }
          pricingRules.push(pricingRule as IPricingRule);
       }
    }
    if(itemNames && itemNames[0]) {
       for(const itemName of itemNames) {
-         const item = await itemsDao.getItemByName(itemName);
+         let item = await itemsDao.getItemByName(itemName.name);
+         item?.setQuantity(itemName.quantity);
          if (item === null) {
             res.send("Invalid Item");
          }
          items.push(item as IItem);
       }
    }
-   if (customer === null)
-      res.send('Invalid customer');
    const checkout: ICheckout = new Checkout(pricingRules, customer as ICustomer);
    for(const item of items) {
       checkout.add(item);
