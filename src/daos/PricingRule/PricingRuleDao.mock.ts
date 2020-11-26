@@ -11,7 +11,9 @@ export default class PricingRuleDao extends MockDaoMock implements IPricingRuleD
                     pricingRule.code,
                     pricingRule.type,
                     pricingRule.discount,
-                    pricingRule.itemType));
+                    pricingRule.itemType,
+                    pricingRule.description,
+                    pricingRule.totalItems));
             }
         }
         return Promise.resolve(null);

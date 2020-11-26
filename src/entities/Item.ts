@@ -3,6 +3,7 @@ export interface IItem {
     name: string;
     description: string;
     retailPrice: number;
+    type: ItemType;
 }
 
 class Item implements IItem {
