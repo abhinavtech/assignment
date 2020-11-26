@@ -5,6 +5,10 @@ import {IItemDao} from "../daos/Item/ItemDao";
 import ItemDao from "../daos/Item/ItemDao.mock";
 import {ICustomerDao} from "../daos/Customer/CustomerDao";
 import CustomerDao from "../daos/Customer/CustomerDao.mock";
+import {IPricingRule} from "../entities/PricingRule";
+import {IItem} from "../entities/Item";
+import Checkout, {ICheckout} from "../entities/Checkout";
+import {ICustomer} from "../entities/Customer";
 
 const router = Router();
 const pricingDao: IPricingRuleDao = new PricingRuleDao();
@@ -79,8 +83,42 @@ router.delete('/pricing/all', async (req: Request, res: Response) => {
    res.send({response});
 })
 
-router.post('/order', (req: Request, res: Response) => {
-   res.send('Hello Pizza!');
+router.post('/checkout', async (req: Request, res: Response) => {
+   const name = req.body.name;
+   const itemNames = req.body.items;
+   const codes = req.body.codes;
+   const pricingRules: IPricingRule[] = [] as IPricingRule[];
+   const items: IItem[] = [] as IItem[];
+   const customer = await customersDao.getCustomerByName(name);
+   if(codes && codes[0]) {
+      for (const code of codes) {
+         const pricingRule = await pricingDao.getPricingByCode(code);
+         if (pricingRule === null) {
+            res.send("Invalid Code");
+         }
+         pricingRules.push(pricingRule as IPricingRule);
+      }
+   }
+   if(itemNames && itemNames[0]) {
+      for(const itemName of itemNames) {
+         const item = await itemsDao.getItemByName(itemName);
+         if (item === null) {
+            res.send("Invalid Item");
+         }
+         items.push(item as IItem);
+      }
+   }
+   if (customer === null)
+      res.send('Invalid customer');
+   const checkout: ICheckout = new Checkout(pricingRules, customer as ICustomer);
+   for(const item of items) {
+      checkout.add(item);
+   }
+   const response = {
+      customer, items, pricingRules,
+      totalPrice: checkout.total()
+   }
+   res.send({response});
 });
 
 export default router;
