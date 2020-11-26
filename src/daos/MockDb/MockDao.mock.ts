@@ -1,11 +1,13 @@
 import jsonfile from 'jsonfile';
 import { IPricingRule } from '../../entities/PricingRule';
 import {IItem} from "../../entities/Item";
+import {ICustomer} from "../../entities/Customer";
 
 
 interface IDatabase {
     pricingRules: IPricingRule[];
     items: IItem[];
+    customers: ICustomer[];
 }
 
 
