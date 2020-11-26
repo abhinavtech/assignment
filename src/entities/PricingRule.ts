@@ -24,7 +24,11 @@ class PricingRule implements IPricingRule {
     }
 
     public applyRule(items: Item[]): number {
-        return 1;
+        let discountAmount = 0;
+        for(const item of items) {
+            discountAmount += item.retailPrice * 0.50;
+        }
+        return discountAmount;
     }
 }
 
