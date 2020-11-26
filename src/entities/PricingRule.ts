@@ -3,7 +3,11 @@ import Item, {ItemType} from "./Item";
 export interface IPricingRule {
     id: number;
     code: string;
-    type: string;
+    type: PricingType;
+    description: string | undefined;
+    discount: number;
+    totalItems: number | undefined;
+    itemType: ItemType;
     applyRule(items: Item[]): number;
 }
 

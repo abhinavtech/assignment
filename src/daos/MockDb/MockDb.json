@@ -1,0 +1,12 @@
+{
+  "pricingRules": [
+    {
+      "id": 1,
+      "code": "FIFTY",
+      "type": "flat",
+      "description": "Flat $50 off on small pizzas",
+      "discount": 50,
+      "itemType": "small"
+    }
+  ]
+}
