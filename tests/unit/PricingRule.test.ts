@@ -7,6 +7,7 @@ describe('Tests Pricing Rules', () => {
         const items: Item[] = [] as Item[];
         items.push(new Item(1, 'Small Pizza', 'Small Pizza', 100, ItemType.small));
         items.push(new Item(1, 'Small Pizza', 'Small Pizza', 100, ItemType.small));
+        items.push(new Item(1, 'Large Pizza', 'Large Pizza', 500, ItemType.large));
         const discountAmount = pricingRule.applyRule(items);
         expect(discountAmount).toBe(100);
         done();

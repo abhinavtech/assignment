@@ -30,7 +30,7 @@ class PricingRule implements IPricingRule {
     public applyRule(items: Item[]): number {
         let discountAmount = 0;
         for(const item of items) {
-            if (this.type === PricingType.flat)
+            if (this.type === PricingType.flat && item.type === this.itemType)
                 discountAmount += item.retailPrice - this.discount;
         }
         return discountAmount;
