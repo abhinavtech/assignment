@@ -93,7 +93,8 @@ router.post('/checkout', async (req: Request, res: Response) => {
    if (customer === null)
       res.send('Invalid customer');
    const pricingMap: any = {};
-   for(const rule in customer?.pricingRules) {
+   // @ts-ignore
+   for(const rule of customer.pricingRules) {
       pricingMap[rule] = true;
    }
    if(codes && codes[0]) {
